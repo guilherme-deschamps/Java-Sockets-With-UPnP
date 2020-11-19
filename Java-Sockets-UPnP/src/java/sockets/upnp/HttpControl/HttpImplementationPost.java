@@ -9,6 +9,11 @@ package java.sockets.upnp.HttpControl;
  *
  * @author guilh
  */
-public class HttpImplementationPost {
+public class HttpImplementationPost implements HttpImplementation {
+
+    @Override
+    public String execute(String data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

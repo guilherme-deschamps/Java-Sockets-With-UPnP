@@ -10,13 +10,23 @@ package java.sockets.upnp.HttpControl;
  * @author guilh
  */
 public class HttpDirector {
-    
+
     private HttpImplementation context;
-    
-    public String execute(String data){
-        
-        context.execute(data);
-        return data;
+
+    public String execute(String requestData) {
+
+        switch (requestData.split(" ")[0]) {
+            case "GET":
+                context = new HttpImplementationGet();
+                break;
+
+            case "POST":
+                context = new HttpImplementationGet();
+                break;
+        }
+
+        context.execute(requestData);
+        return requestData;
     }
-    
+
 }
