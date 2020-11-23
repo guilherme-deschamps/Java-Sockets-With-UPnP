@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,10 @@ public class HttpImplementationPost implements HttpImplementation {
     @Override
     public String execute(String content) {
         String pathName = httpUtils.getPathName(content);
+        
+        if(pathName.equals("/teapot")){
+            return "HTTP/1.1 " + HttpResponses.IM_A_TEAPOT.getStatus();
+        }
 
         /**
          * Removing first line and headers of request body.
@@ -40,8 +45,10 @@ public class HttpImplementationPost implements HttpImplementation {
             appendFileContent(pathName, content);
         } catch (InvalidDataException ex) {
             return "HTTP/1.1 " + HttpResponses.BAD_REQUEST.getStatus();
+        } catch (AccessDeniedException ex) {
+            return "HTTP/1.1 " + HttpResponses.FORBIDDEN.getStatus();
         } catch (IOException ex){
-            return "HTTP/1.1 " + HttpResponses.IM_A_TEAPOT.getStatus();
+            return "HTTP/1.1 " + HttpResponses.SERVICE_UNAVAILABLE.getStatus();
         }
 
         return "HTTP/1.1 " + HttpResponses.OK.getStatus();
