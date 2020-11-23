@@ -22,7 +22,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class HttpImplementationGet implements HttpImplementation {
 
     HttpDirector httpDirector = new HttpDirector();
-    
+
     static HttpUtils httpUtils = HttpUtils.getInstance();
 
     @Override
@@ -46,11 +46,30 @@ public class HttpImplementationGet implements HttpImplementation {
     public String constructResponse(String pathName, String fileContent) {
         File arq = new File(httpDirector.getPublicHtml() + pathName);
 
+        if (arq.isDirectory()) {
+            boolean foundIndex = false;
+
+            for (File f : arq.listFiles()) {
+                if (f.getName().equals("index.html")) {
+                    arq = f;
+                    foundIndex = true;
+                    break;
+                }
+            }
+
+            if (!foundIndex) {
+                String response = "<h3>Index of " + pathName + "</h3><br><br>";
+                for (File f : arq.listFiles()) {
+                    response += f.getName() + "<br>";
+                }
+            }
+        }
+
         String response = "HTTP/1.1 " + HttpResponses.OK.getStatus() + "\n";
         response += "Content-type: " + httpUtils.getContentType(pathName) + "\n";
         response += "Content-Length: " + arq.length() + "\n\r\n";
         response += fileContent;
-        
+
         return response;
     }
 

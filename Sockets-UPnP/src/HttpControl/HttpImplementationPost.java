@@ -31,7 +31,6 @@ public class HttpImplementationPost implements HttpImplementation {
 
     @Override
     public String execute(String content) {
-        System.out.println("ENTROU NO POST");
         String pathName = httpUtils.getPathName(content);
 
         if (pathName.equals("/teapot")) {
