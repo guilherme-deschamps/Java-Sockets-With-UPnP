@@ -12,9 +12,9 @@ package HttpControl;
 public class HttpDirector {
 
     private HttpImplementation context;
-    
+
     private String publicHtml = "public_html";
-    
+
     public String execute(String requestData) {
 
         String httpMethod = requestData.split(" ")[0];
@@ -26,12 +26,15 @@ public class HttpDirector {
             case "POST":
                 context = new HttpImplementationPost();
                 break;
+
+            default:
+                return "HTTP/1.1 " + HttpResponses.NOT_IMPLEMENTED.getStatus();
         }
 
         return context.execute(requestData);
     }
-    
-    public String getPublicHtml(){
+
+    public String getPublicHtml() {
         return publicHtml;
     }
 

@@ -35,8 +35,10 @@ public class HttpImplementationGet implements HttpImplementation {
             return constructResponse(pathName, fileContent);
         } catch (FileNotFoundException ex) {
             return "HTTP/1.1 " + HttpResponses.NOT_FOUND.getStatus();
+        } catch (NotImplementedException ex) {
+            return "HTTP/1.1 " + HttpResponses.NOT_IMPLEMENTED.getStatus();
         } catch (IOException ex) {
-            return "b";
+            return "HTTP/1.1 " + HttpResponses.BAD_REQUEST.getStatus();
         }
     }
 

@@ -41,6 +41,7 @@ public class JavaSocketsUPnP {
                 int qttBytes = in.read(requestBytes);
                 System.out.println("Passou: " + qttBytes);
                 String requestContent = new String(requestBytes, 0, qttBytes);
+                System.out.println(requestContent);
 
                 String response = httpDirector.execute(requestContent);
 

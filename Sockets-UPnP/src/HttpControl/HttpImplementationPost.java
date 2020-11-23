@@ -26,32 +26,33 @@ import javax.xml.ws.Response;
 public class HttpImplementationPost implements HttpImplementation {
 
     HttpDirector httpDirector = new HttpDirector();
-    
+
     static HttpUtils httpUtils = HttpUtils.getInstance();
 
     @Override
     public String execute(String content) {
+        System.out.println("ENTROU NO POST");
         String pathName = httpUtils.getPathName(content);
-        
-        if(pathName.equals("/teapot")){
+
+        if (pathName.equals("/teapot")) {
             return "HTTP/1.1 " + HttpResponses.IM_A_TEAPOT.getStatus();
         }
 
         /**
          * Removing first line and headers of request body.
          */
-        content = content.substring(content.indexOf("\r\n") + 2, content.length());
+        content = content.substring(content.indexOf("\r\n\r\n") + 4, content.length());
         try {
             appendFileContent(pathName, content);
         } catch (InvalidDataException ex) {
             return "HTTP/1.1 " + HttpResponses.BAD_REQUEST.getStatus();
         } catch (AccessDeniedException ex) {
             return "HTTP/1.1 " + HttpResponses.FORBIDDEN.getStatus();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             return "HTTP/1.1 " + HttpResponses.SERVICE_UNAVAILABLE.getStatus();
         }
 
-        return "HTTP/1.1 " + HttpResponses.OK.getStatus();
+        return constructResponse(pathName, content);
     }
 
     private void appendFileContent(String pathName, String content) throws IOException {
@@ -107,6 +108,6 @@ public class HttpImplementationPost implements HttpImplementation {
 
     @Override
     public String constructResponse(String pathName, String fileContent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "HTTP/1.1 " + HttpResponses.OK.getStatus();
     }
 }
