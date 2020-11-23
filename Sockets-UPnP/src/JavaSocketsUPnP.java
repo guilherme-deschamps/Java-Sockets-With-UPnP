@@ -18,7 +18,7 @@ import HttpControl.HttpDirector;
  */
 public class JavaSocketsUPnP {
 
-    static UpnpUtils upnpUtils = UpnpUtils.getInstance();
+    private static UpnpUtils upnpUtils = UpnpUtils.getInstance();
 
     /**
      * @param args the command line arguments
