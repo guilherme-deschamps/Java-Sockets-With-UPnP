@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.sockets.upnp;
+
 
 import com.dosse.upnp.UPnP;
 
@@ -15,8 +15,8 @@ public class UpnpUtils {
 
     private static UpnpUtils instance;
     
-    private int port = 56003;
-
+    private int port = 80;
+    
     private UpnpUtils() {
     }
 

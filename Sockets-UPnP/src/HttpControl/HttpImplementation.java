@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.sockets.upnp.HttpControl;
+package HttpControl;
 
 /**
  *
@@ -12,5 +12,7 @@ package java.sockets.upnp.HttpControl;
 public interface HttpImplementation {
     
     public String execute(String data);
+    
+    public String constructResponse(String pathName, String fileContent);
     
 }
